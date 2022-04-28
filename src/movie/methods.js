@@ -15,3 +15,16 @@ exports.listMovies = async () => {
         console.log(error);
     }
 }
+
+exports.updateMovie = async (filterObj, updateObj) => {
+    try {
+        const updateResult = await Movie.updateOne(filterObj, updateObj);
+        if (updateResult.modifiedCount > 0) {
+            console.log("Update successful");
+        } else {
+            console.log("Could not update")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
