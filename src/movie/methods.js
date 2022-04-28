@@ -33,7 +33,7 @@ exports.updateMovie = async (filterObj, updateObj) => {
 exports.deleteMovie = async (filterObj) => {
     try {
         const deleteResult = await Movie.deleteOne(filterObj);
-        if (deleteResult > 0) {
+        if (deleteResult.deletedCount > 0) {
             console.log("Deletion successful");
         } else {
             console.log("Could not delete");
