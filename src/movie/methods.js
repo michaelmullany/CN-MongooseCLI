@@ -8,9 +8,10 @@ exports.addMovie = async (movieObj) => {
     }
 }
 
-exports.listMovies = async () => {
+exports.listMovies = async (filterObj) => {
     try {
-        return await Movie.find();
+        const cleanFilter = removeUndefinedFromObject(filterObj);
+        return await Movie.find(cleanFilter);
     } catch (error) {
         console.log(error);
     }
@@ -27,4 +28,29 @@ exports.updateMovie = async (filterObj, updateObj) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+exports.deleteMovie = async (filterObj) => {
+    try {
+        const deleteResult = await Movie.deleteOne(filterObj);
+        if (deleteResult > 0) {
+            console.log("Deletion successful");
+        } else {
+            console.log("Could not delete");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Take an object and remove keys with a value of undefined
+// This allows us to delete using only the properties passed in on the CLI
+function removeUndefinedFromObject(initialObject) {
+    const cleanObject = {};
+    Object.keys(initialObject).forEach(key => {
+        if (initialObject[key] != undefined) {
+            cleanObject[key] = initialObject[key];
+        }
+    });
+    return cleanObject;
 }
