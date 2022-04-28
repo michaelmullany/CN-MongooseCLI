@@ -1,7 +1,7 @@
 require("./db/connection");
 const { default: mongoose } = require("mongoose");
 const yargs = require("yargs");
-const { addMovie } = require("./movie/methods");
+const { addMovie, listMovies } = require("./movie/methods");
 
 const app = async (yargsObj) => {
     try {
@@ -11,6 +11,8 @@ const app = async (yargsObj) => {
             console.log(`Successfully added ${yargsObj.title}.`);
         } else if (yargsObj.list) {
             //list movies from database
+            const list = await listMovies();
+            console.log(list);
         } else if (yargsObj.update) {
             //update movies with filterObj and updateObj
         } else if (yargsObj.delete) {
